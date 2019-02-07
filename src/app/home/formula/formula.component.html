@@ -1,0 +1,61 @@
+
+  
+<ng-sidebar-container style="height:100vh; width: 100%;">
+    <!-- A sidebar -->
+    <ng-sidebar #sidebar mode="slide"[(opened)]="_opened" style="background: black !important;color:white">
+        <ul class="nav sidebar-nav">
+            <li>
+                <a class="nav-link" routerLinkActive="activelink" routerLink="/home/resourse">
+                    Resourse
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" routerLinkActive="activelink" routerLink="/home/project">
+                    Project
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" routerLinkActive="activelink" routerLink="/home/formula">
+                    Formula
+                </a>
+            </li>
+        </ul>
+    </ng-sidebar>
+    <!-- Page content -->
+    <div ng-sidebar-content style="position: relative; left: -2px;">
+        <button style="background:black; color:white;border:none; font-size: 25px; padding-left:3px;" >
+            <div class="hamburger" (click)="_toggleSidebar()" [ngClass]="_opened ? 'is-opened' : ''">
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+              <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+                <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                <td mat-cell *matCellDef="let element; let i = index;">
+                    <p style="display: inline-table" *ngIf='column === "_id" && returnType(column) != "formula"'>{{element[column]}}</p>
+                    <input *ngIf='column !== "_id" && returnType(column) !== "number" && returnType(column) != "formula"'type="text" (change)="updateData(i)" [(ngModel)]="element[column]" class="form-control" style="width:40%; border:none;display:table-cell">
+                    <input *ngIf='column !== "_id" && returnType(column) === "number" && returnType(column) != "formula"'type="number" (change)="updateData(i)" [(ngModel)]="element[column]" class="form-control" style="width:40%; border:none;display:table-cell">
+                    <p style="display: inline-table" *ngIf='returnType(column) === "formula"'>{{calculate(element, column)}}</p>
+                </td>
+
+              </ng-container>
+              <!-- ID Column -->
+              <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+              <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+            </table>
+          
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+        <a class="sm-link sm-link_padding-all sm-link1" routerLink="/home/template" routerLinkActive="activelink">
+            <span style="font-weight: 800;" class="sm-link__label" >Edit Quantity Survey Template</span>
+        </a>
+        <button mat-raised-button class="btn btn-outline-primary mb-2 mr-2 mybtn" style="margin-left:68%" (click)="passData()"> Submit </button>
+    </div>
+  </ng-sidebar-container>
+
+  <!-- Copyright 2018 Google Inc. All Rights Reserved.
+      Use of this source code is governed by an MIT-style license that
+      can be found in the LICENSE file at http://angular.io/license -->

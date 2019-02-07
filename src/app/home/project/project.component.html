@@ -1,0 +1,135 @@
+
+  
+<ng-sidebar-container style="height:100vh; width: 100%;">
+        <!-- A sidebar -->
+        <ng-sidebar #sidebar mode="slide"[(opened)]="_opened" style="background: black !important;color:white">
+            <ul class="nav sidebar-nav" >
+                <li>
+                    <a style="font-family:myriad;" class="nav-link" routerLinkActive="activelink" routerLink="/home/resourse">
+                        Resourse
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" routerLinkActive="activelink" routerLink="/home/project">
+                        Project
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" routerLinkActive="activelink" routerLink="/home/formula">
+                        Formula
+                    </a>
+                </li>
+            </ul>
+        </ng-sidebar>
+        <!-- Page content -->
+        <div ng-sidebar-content style="position: relative; left: -2px;">
+            <button style="background:black; color:white;border:none; font-size: 25px; padding-left:3px;" >
+                <div class="hamburger" (click)="_toggleSidebar()" [ngClass]="_opened ? 'is-opened' : ''">
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+            <div class="container">
+                <mat-form-field class="selection">
+                    <mat-select [(value)]="selected" (selectionChange)="reloadData()">
+                        <mat-option value="Project1">Project 1</mat-option>
+                        <mat-option value="Project2">Project 2</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="mat-elevation-z8">
+                            <div class="row">
+                                <div class="col text-right" style="background-color: rgba(105, 104, 104, 0.89); margin-right:15px; margin-left:15px;">
+                                    <div ngbDropdown style="margin:5px;"placement="bottom-right"class="d-inline-block">
+                                        <button class="btn btn-outline-primary mybtn" id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-bars"></i></button>
+                                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                            <button class="dropdown-button dropdown-item btn btn-outline-primary mb-2 mr-2" (click)="checkAllOne()"><i class="far fa-check-square"></i> Select All </button>
+                                            <button class="dropdown-button dropdown-item btn btn-outline-primary mb-2 mr-2" (click)="clearAllOne()"><i class="far fa-square"></i> Clear Selection </button>
+                                        </div>
+                                    </div>
+                                    <div class="d-inline-block">
+                                        <button style="margin:5px" class="btn btn-outline-primary mybtn" (click)="displayNewTable()"id="dropdownBasic1"><i class="fas fa-share"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table mat-table [dataSource]="dataSource" matSort>  <!-- Checkbox Column -->
+                                <ng-container matColumnDef="select">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <mat-checkbox (change)="$event ? masterToggleOne() : null"
+                                                        [checked]="selectionOne.hasValue() && isAllSelectedOne()"
+                                                        [indeterminate]="selectionOne.hasValue() && !isAllSelectedOne()">
+                                        </mat-checkbox>
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <mat-checkbox  (change)="$event ? selectionOne.toggle(row) : null"
+                                                        [checked]="selectionOne.isSelected(row)">
+                                        </mat-checkbox>
+                                    </td>
+                                </ng-container>
+                                <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns | slice:1; let i = index;">
+                                    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                                    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                                </ng-container>
+                                <!-- ID Column -->
+                                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                            </table>
+                        
+                            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-6">
+                        <div class="mat-elevation-z8">
+                            <div class="row">
+                                <div class="col text-right" style="background-color: rgba(105, 104, 104, 0.89); margin-right:15px; margin-left:15px;">
+                                    <div ngbDropdown style="margin:5px;"placement="bottom-right"class="d-inline-block">
+                                        <button class="btn btn-outline-primary mybtn" id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-bars"></i></button>
+                                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                            <button class="dropdown-button dropdown-item btn btn-outline-primary mb-2 mr-2" (click)="checkAllTwo()"><i class="far fa-check-square"></i> Select All </button>
+                                            <button class="dropdown-button dropdown-item btn btn-outline-primary mb-2 mr-2" (click)="clearAllTwo()"><i class="far fa-square"></i> Clear Selection </button>
+                                        </div>
+                                    </div>
+                                    <div class="d-inline-block">
+                                        <button style="margin:5px" class="btn btn-outline-primary mybtn" (click)="clearNewTable()"id="dropdownBasic1"><i class="fas fa-trash-alt"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <table mat-table [dataSource]="newDataSource" matSort>  <!-- Checkbox Column -->
+                                <ng-container matColumnDef="select">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <mat-checkbox (change)="$event ? masterToggleTwo() : null"
+                                                        [checked]="selectionTwo.hasValue() && isAllSelectedTwo()"
+                                                        [indeterminate]="selectionTwo.hasValue() && !isAllSelectedTwo()">
+                                        </mat-checkbox>
+                                    </th>
+                                    <td mat-cell *matCellDef="let row">
+                                        <mat-checkbox (change)="$event ? selectionTwo.toggle(row) : null"
+                                                        [checked]="selectionTwo.isSelected(row)">
+                                        </mat-checkbox>
+                                    </td>
+                                </ng-container>
+                                <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns | slice:1; let i = index;">
+                                    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                                    <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                                </ng-container>
+                                <!-- ID Column -->
+                                <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+                                <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+                            </table>
+                            
+                            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                            
+                        </div>
+                        <button mat-raised-button class="btn btn-outline-primary mb-2 mr-2 mybtn" style="margin-left:85%" (click)="passData()"> Submit </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </ng-sidebar-container>
+    
+      <!-- Copyright 2018 Google Inc. All Rights Reserved.
+          Use of this source code is governed by an MIT-style license that
+          can be found in the LICENSE file at http://angular.io/license -->

@@ -1,0 +1,70 @@
+.navbar {
+    padding: 0px;
+    margin-bottom: 0px;
+    box-shadow: 0 0 5px #000000, 0 0 3px #000000e7, 0 0 8px #0a0a0a, 0 0 1.3px #000000, 
+    0 0 1.4px #3d3b3d, 0 0 5px #0c0b0bbd, 0 0 2px #000000c0;
+    background: rgba(255, 255, 255, 0.829) !important;
+    .bwm-search {
+      height: 44px;
+    }
+    .navbar-brand {
+      font-size: 35px;
+      letter-spacing: 2px;
+      font-weight: 900;
+      color: rgb(255, 255, 255);
+      background: #ee4300;
+      width:250px;
+      .management-brand {
+        margin-left: 10px;
+        font-size: 35px;
+        letter-spacing: 2px;
+        font-weight: 900;
+        color: rgb(255, 187, 0);
+        
+        text-decoration: none !important;
+        &:hover{
+          font-size: 35px;
+          color: rgba(247, 247, 247, 0.692);
+          text-shadow: 0 0 5px #ffd900, 0 0 10px #ffd000, 0 0 20px #000000, 0 0 30px #000000, 
+          0 0 40px #8d60006b, 0 0 55px #ffae00a2, 0 0 75px #5bbd003b;
+        }
+      }
+      .smallTitle {
+          display: inline;
+          font-size: 14px;
+          font-weight: 300 !important;
+          padding-left: 10px;
+      }
+    }
+
+    .nav-item {
+      font-size: 14px;
+      #nohover:hover{
+        color:rgb(255, 255, 255);
+        text-shadow: 0 0 2px rgb(0, 0, 0), 0 0 2px #000000, 0 0 2px #ffffff, 0 0 3px rgba(2, 0, 0, 0), 
+        0 0 1px rgb(0, 0, 0), 0 0 5px rgb(255, 255, 255), 0 0 15px rgb(36, 36, 36);
+      }
+      .nav-link{
+        text-shadow: 0 0 2px rgb(0, 0, 0), 0 0 2px #000000, 0 0 2px #ffffff, 0 0 3px rgba(2, 0, 0, 0), 
+        0 0 1px rgb(0, 0, 0), 0 0 5px rgb(0, 0, 0), 0 0 1px rgb(0, 0, 0);
+        color:white;
+        font-weight: 600;
+        &:hover{
+          color:rgb(255, 255, 255);
+          text-shadow: 0 0 2px rgb(0, 0, 0), 0 0 2px #cf0000, 0 0 2px #ffffff, 0 0 3px rgba(2, 0, 0, 0), 
+          0 0 1px rgb(0, 0, 0), 0 0 5px rgb(255, 255, 255), 0 0 15px rgb(182, 0, 0);
+        }
+      }
+    }
+  }
+.popover{
+  width:270px
+}
+.popover-body{
+    background:black !important;
+    padding:0;
+
+} 
+.bs-popover-auto[x-placement^=bottom] .arrow::after, .bs-popover-bottom .arrow::after{
+    border-bottom-color: black;
+}

@@ -1,0 +1,56 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand">
+      <a class="management-brand" routerLink="/home" routerLinkActive="activelink">
+        <i class="fas fa-cube" style="font-size: 38px;"></i>
+      </a> 
+      <p class="smallTitle" style="color:white;font-family:myriad;font-size:16px;"> Resourse Management</p>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <p style="font-family:myriad;font-size: 31px;margin:auto; margin-left:24%;" *ngIf="projectNumber != null">Project{{projectNumber}}</p>
+    
+    <ng-template #popContent>
+      <div style="padding: 40px; padding-top: 35px; padding-bottom:0;margin:auto; text-align:center;color:white; width:100%">
+        <h3>{{service.getUsername()}}</h3>
+        <p>Member Since</p>
+        <p style="margin-bottom:0px;">{{service.getUserdate()}}</p>
+      </div>
+      <div style="background:rgba(214, 214, 214, 0.849); padding:12px;margin-top:10px;">  
+        <button style="display:inline-block; padding:6px" class="nav-link" routerLinkActive="activelink" > <i class="fas fa-user"></i> Profile <span class="sr-only">(current)</span></button>
+        <button style="display:inline-block; margin-left: 83px; padding:6px" class="nav-link" routerLink="/login" routerLinkActive="activelink" (click)='logout()'><i class="fas fa-sign-out-alt"></i> Logout <span class="sr-only">(current)</span></button>
+      </div>
+    </ng-template>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li *ngIf = "!service.isAuthenticated()" class="nav-item active">
+          <a class="nav-link" routerLink="/login" routerLinkActive="activelink"><i class="fas fa-sign-in-alt"></i> Login <span class="sr-only">(current)</span></a>
+        </li>
+        <li *ngIf = "!service.isAuthenticated()" class="nav-item">
+          <a class="nav-link" routerLink="/register" routerLinkActive="activelink"><i class="fas fa-registered"></i> Register</a>
+        </li>
+        <li *ngIf = "service.isAuthenticated()" style="margin-right: 40px;" class="nav-item">
+          <a class="nav-link" id="nohover">
+            <button type="button" style="border:none;" class="btn btn-outline-secondary mr-2" placement="bottom"
+            [ngbPopover]="popContent" [popoverTitle]="popTitle">
+              <i class="fas fa-user-circle" style="font-size: 30px"></i>
+            </button>
+            {{service.getUsername()}}
+          </a>
+        </li>
+        
+        <li *ngIf = "service.isAuthenticated()" style="margin-right: 40px;" class="nav-item">
+          <a class="nav-link">
+            <button type="button" style="border:none;"class="btn btn-outline-secondary mr-2">
+              <i style="font-size: 30px;" class="far fa-question-circle"></i>
+            </button>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+

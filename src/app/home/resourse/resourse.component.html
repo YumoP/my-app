@@ -1,0 +1,97 @@
+
+  
+<ng-sidebar-container style="height:100vh; width: 100%;">
+    <!-- A sidebar -->
+    <ng-sidebar #sidebar mode="slide"[(opened)]="_opened" style="background: black !important;color:white">
+        <ul class="nav sidebar-nav">
+            <li>
+                <a class="nav-link" routerLinkActive="activelink" routerLink="/home/resourse">
+                    Resourse
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" routerLinkActive="activelink" routerLink="/home/project">
+                    Project
+                </a>
+            </li>
+            <li>
+                <a class="nav-link" routerLinkActive="activelink" routerLink="/home/formula">
+                    Formula
+                </a>
+            </li>
+        </ul>
+    </ng-sidebar>
+    <!-- Page content -->
+    <div ng-sidebar-content style="position: relative; left: -2px;">
+        <button style="background:black; color:white;border:none; font-size: 25px; padding-left:3px;" >
+            <div class="hamburger" (click)="_toggleSidebar()" [ngClass]="_opened ? 'is-opened' : ''">
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+
+        <div class="mat-elevation-z8">
+            <div class="row">
+                <div class="col text-right" style="background-color: rgba(105, 104, 104, 0.89); margin-right:15px; margin-left:15px;">
+                    <input id="filter"(keyup)="applyFilter($event.target.value)"placeholder="Filter">
+                    <button style="margin-left:0px;margin-right: 80%;border-top-left-radius: 0px;border-bottom-left-radius: 0px;" class="btn btn-outline-primary mybtn" ><i class="fas fa-search"></i></button>
+
+                    <div ngbDropdown style="margin:5px;"placement="bottom-right"class="d-inline-block">
+                        <button class="btn btn-outline-primary mybtn" id="dropdownBasic1" ngbDropdownToggle><i class="fas fa-plus"></i></button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button class="dropdown-button dropdown-item btn btn-outline-primary mb-2 mr-2" (click)="openWindowCustomClass(content)"><i class="far fa-plus-square"></i> Add Column </button>
+                            <button class="dropdown-button dropdown-item btn btn-outline-primary mb-2 mr-2" (click)="removeColumn()"><i class="far fa-minus-square"></i> Remove column </button>
+                            <button class="dropdown-button dropdown-item btn btn-outline-primary mb-2 mr-2" (click)="addRow()"><i class="fas fa-plus-square"></i> Add Row </button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <ng-template #content let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Column</h4>
+                    <button  class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" placeholder="Column Name" class="form-control" [(ngModel)]="columnName" style="width:50%; display:inline-block; margin-right:10px;">
+                    <button mat-raised-button class="btn btn-outline-primary mb-2 mr-2" (click)="addColumn()"> Add </button>
+                </div>
+            </ng-template>
+                    
+            
+            <table mat-table [dataSource]="dataSource" matSort>
+              <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+                <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+                <td [className]="ifAdd ? 'addDisplay mat-footer-cell' : 'addNone'"  mat-footer-cell *matFooterCellDef>
+                    <a *ngIf="ifLast(column)"class="button" role="button" (click)="submitRow()">
+                        <div style="display:inline; padding-right:15px;" class="icon">
+                            <i class="fa fa-check" style="color: #ff8800; cursor: pointer;"></i>
+                        </div>
+                    </a>                    
+                    <a *ngIf="ifLast(column)" class="button" role="button" (click)="cancelRow()">
+                        <div style="display:inline; padding-right:15px;" class="icon">
+                            <i class="fas fa-ban" style="color: #ff8800; cursor: pointer;"></i>
+                        </div>
+                    </a>
+                    <!-- <input [(ngModel)]="newData.column" placeholder={{column}}> -->
+                    <input type="text" [(ngModel)]="newData[column]" placeholder={{column}} class="form-control" style="width:40%; display:table-cell">
+                </td>
+              </ng-container>
+              <!-- ID Column -->
+              <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+              <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+              <tr  #addinput mat-footer-row *matFooterRowDef="columnsToDisplay"></tr>
+            </table>
+          
+            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+  </ng-sidebar-container>
+
+  <!-- Copyright 2018 Google Inc. All Rights Reserved.
+      Use of this source code is governed by an MIT-style license that
+      can be found in the LICENSE file at http://angular.io/license -->

@@ -1,0 +1,112 @@
+
+  
+<ng-sidebar-container style="height:100vh; width: 100%;">
+  <!-- A sidebar -->
+  <ng-sidebar #sidebar mode="slide"[(opened)]="_opened" style="background: black !important;color:white">
+      <ul class="nav sidebar-nav">
+          <li>
+              <a class="nav-link" routerLinkActive="activelink" routerLink="/home/resourse">
+                  Resourse
+              </a>
+          </li>
+          <li>
+              <a class="nav-link" routerLinkActive="activelink" routerLink="/home/project">
+                  Project
+              </a>
+          </li>
+          <li>
+              <a class="nav-link" routerLinkActive="activelink" routerLink="/home/formula">
+                  Formula
+              </a>
+          </li>
+      </ul>
+  </ng-sidebar>
+  <!-- Page content -->
+  <div ng-sidebar-content style="position: relative; left: -2px;">
+      <button style="background:black; color:white;border:none; font-size: 25px; padding-left:3px;" >
+          <div class="hamburger" (click)="_toggleSidebar()" [ngClass]="_opened ? 'is-opened' : ''">
+              <span></span>
+              <span></span>
+          </div>
+      </button>
+      <div class="container">
+        <hr>
+        <div class="card bg-light">
+        <article class="card-body mx-auto" style="max-width: 400px;">
+          <h4 class="card-title mt-3 text-center" style="color:rgb(219, 124, 0); -webkit-text-stroke: 0.3px black; font-weight: 600"><i>Create Account</i></h4>
+          <p class="text-center">Get started with your free account</p>
+          <div *ngIf="errors.length > 0" style="color:black !important" class="alert alert-danger">
+            <div *ngFor="let error of errors">{{error.detail}}</div>
+          </div>
+          <p class="divider-text">
+                <span class="bg-light">OR</span>
+            </p>
+          <form [formGroup]="regForm" (ngSubmit)="register()" novalidate>
+          <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+             </div>
+                <input name="" class="form-control" formControlName="username"  type="text" placeholder="Full name" type="text">
+            </div> <!-- form-group// -->
+              
+            <div  class="alert alert-danger" *ngIf="regForm.controls['username'].invalid && (regForm.controls['username'].dirty ||regForm.controls['username'].touched )">    
+              <div *ngIf="regForm.controls['username'].errors.required">        
+                Name is required    
+              </div>  
+            </div>
+        
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+             </div>
+                <input name="" class="form-control" formControlName="email"  type="text" placeholder="Email address" type="email">
+            </div> <!-- form-group// -->
+            <div class="alert alert-danger" *ngIf="regForm.controls['email'].invalid && (regForm.controls['email'].dirty ||regForm.controls['email'].touched )">     
+              <div *ngIf="regForm.controls['email'].errors.required">        
+                Email is required      
+              </div> 
+              <div *ngIf="regForm.controls['email'].errors.pattern">
+                Must be an E-Mail!
+              </div>   
+            </div> 
+        
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+                <input class="form-control" formControlName="password" placeholder="Create password" type="password">
+            </div> <!-- form-group// -->  
+            <div  class="alert alert-danger" *ngIf="regForm.controls['password'].invalid && (regForm.controls['password'].dirty ||regForm.controls['password'].touched )">    
+              <div *ngIf="regForm.controls['password'].errors.required">        
+                password is required    
+              </div>  
+            </div>
+            <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+            </div>
+                <input class="form-control" formControlName="passwordConfirmation" placeholder="Repeat password" type="password">
+            </div> <!-- form-group// -->   
+            <div  class="alert alert-danger" *ngIf="regForm.controls['passwordConfirmation'].invalid && (regForm.controls['passwordConfirmation'].dirty ||regForm.controls['passwordConfirmation'].touched )">    
+              <div *ngIf="regForm.controls['passwordConfirmation'].errors.required">        
+                password repeat is required    
+              </div>  
+            </div>                                   
+            <div class="form-group">
+                <button type="submit" style="background:rgb(214, 61, 0)"class="btn btn-primary btn-block"> Create Account  </button>
+            </div> <!-- form-group// -->      
+            <p class="text-center">Have an account? <a href="">Log In</a></p>                                                                 
+        </form>
+        </article>
+        </div> <!-- card.// -->
+        
+        </div> 
+        <!--container end.//-->
+        
+        <br><br>
+        <article class="bg-secondary mb-3">   
+        <br><br>
+        </article>
+  </div>
+</ng-sidebar-container>
+
