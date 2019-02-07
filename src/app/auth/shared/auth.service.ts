@@ -43,7 +43,6 @@ export class AuthService{
         localStorage.removeItem('meta');
         localStorage.removeItem('fields');
         this.decodedToken = new DecodedToken();
-        
     }
     public getUsername (){
         return this.decodedToken.username;
