@@ -4,7 +4,7 @@ const {changeMonth} = require("../helpers/monthChange");
 const jwt = require("jsonwebtoken");
 const config = require('../config/dev');
 
-exports.login = function(req, res) {
+module.exports.login = function(req, res) {
     const {password, email} = req.body;
 
     if(!password || !email){
@@ -31,7 +31,7 @@ exports.login = function(req, res) {
 
 }
 
-exports.register = function(req, res){
+module.exports.register = function(req, res){
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;

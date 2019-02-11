@@ -17,8 +17,7 @@ const fileFilter = (req, file, cb)=>{
         cb(new Error('Invalid file type'), false);
     }
 }
-var upload = multer({
-    fileFilter,
+var upload = multer({fileFilter,
   storage: multerS3({
     s3: s3,
     bucket: 'itlizetest2',
@@ -29,7 +28,7 @@ var upload = multer({
     },
     //timestamp
     key: function (req, file, cb) {
-      cb(null, Date.now().toString())
+      cb(null, Date.now().toString());
     }
   })
 })
